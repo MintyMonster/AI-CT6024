@@ -8,11 +8,12 @@ public class PatrolNode : Node
     private NavMeshAgent agent;
     private float walkRadius = 300f;
     public bool canMove { get; set; } = true;
-    public float Speed { get; set; } = 35f;
+    public float Speed;
 
-    public PatrolNode(NavMeshAgent agent)
+    public PatrolNode(NavMeshAgent agent, float Speed)
     {
         this.agent = agent;
+        this.Speed = Speed;
     }
 
     public override NodeState Evaluate()

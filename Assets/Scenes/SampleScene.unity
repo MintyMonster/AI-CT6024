@@ -4850,6 +4850,7 @@ GameObject:
   - component: {fileID: 151421753}
   - component: {fileID: 151421752}
   - component: {fileID: 151421757}
+  - component: {fileID: 151421758}
   m_Layer: 0
   m_Name: AI
   m_TagString: Character
@@ -4976,9 +4977,46 @@ MonoBehaviour:
   m_GameObject: {fileID: 151421751}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b975f7bdc0a50e4585958babcfb69ee, type: 3}
+  m_Script: {fileID: 11500000, guid: b680625a5d11959458a5deb714ae4685, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 1961713215}
+  agent: {fileID: 151421752}
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  deadGuardLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  sightRange: 10
+  viewAngle: 120
+  hearingRange: 10
+  fleeDistance: 50
+  minGuardRequired: 2
+  health: 100
+  Speed: 3
+  chaseRadius: 20
+--- !u!114 &151421758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 151421751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 732bdf1fae81f864099d5603147e915a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewRadius: 15
+  viewAngle: 150.5
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 64
+  obstructionMask:
+    serializedVersion: 2
+    m_Bits: 191
+  player: {fileID: 1961713215}
 --- !u!1001 &153806822
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30259,7 +30297,7 @@ GameObject:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -51044,6 +51082,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Flashlight
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: b694b8ec5c41f6247843a2b67222fda6, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: b694b8ec5c41f6247843a2b67222fda6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.14686543
@@ -64504,7 +64546,7 @@ GameObject:
   - component: {fileID: 1961713220}
   - component: {fileID: 1961713219}
   - component: {fileID: 1961713221}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Character
   m_Icon: {fileID: 0}
@@ -64520,7 +64562,7 @@ Transform:
   m_GameObject: {fileID: 1961713214}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -12.96, y: 1.023, z: 41.78}
+  m_LocalPosition: {x: -19.77, y: 1.023, z: 3.09}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -65642,6 +65684,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 7c4cfd35d7e78fb44a0f5522e37c35b1, type: 3}
       propertyPath: m_Name
       value: Spotlight
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 7c4cfd35d7e78fb44a0f5522e37c35b1, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 7c4cfd35d7e78fb44a0f5522e37c35b1, type: 3}
       propertyPath: m_LocalPosition.x
