@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class GuardViewCone : MonoBehaviour
 {
-    public float viewRadius = 10f;
+    public float viewRadius = 8f;
     [Range(0, 360)]
     public float viewAngle = 120f;
     public LayerMask targetMask;
     public LayerMask obstructionMask;
     public Transform player;
+
+    private float lastSeenTime = 0f; // Variable to track the last time the player was seen
 
     private void OnDrawGizmos()
     {
@@ -34,24 +36,38 @@ public class GuardViewCone : MonoBehaviour
 
     public bool CanSeePlayer()
     {
-        if (player != null)
+        Collider[] rangeChecks = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
+
+        if (rangeChecks.Length != 0)
         {
-            Vector3 directionToPlayer = (player.position - transform.position).normalized;
-            if (Vector3.Distance(transform.position, player.position) < viewRadius)
+            Transform target = rangeChecks[0].transform;
+            Vector3 directionToTarget = (target.position - transform.position).normalized;
+
+            if (Vector3.Angle(transform.forward, directionToTarget) < viewAngle / 2)
             {
-                if (Vector3.Angle(transform.forward, directionToPlayer) < viewAngle / 2)
-                {
-                    if (!Physics.Raycast(transform.position, directionToPlayer, out RaycastHit hit, viewRadius, obstructionMask))
-                    {
-                        return true;
-                    }
-                }
+                float distanceToTarget = Vector3.Distance(transform.position, target.position);
+
+                if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, obstructionMask))
+                    return true;
             }
         }
+
         return false;
     }
 
     public bool PlayerWithinRadius(float radius)
-        => Vector3.Distance(transform.position, player.position) < radius;
+    {
+        return Vector3.Distance(transform.position, player.position) < radius;
+    }
 
+    public float LastSeenTime => lastSeenTime; // Getter for the lastSeenTime variable
+
+    private void Update()
+    {
+        // Update lastSeenTime when the player is seen
+        if (CanSeePlayer())
+        {
+            lastSeenTime = Time.time;
+        }
+    }
 }

@@ -2,12 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Node
+public class Node : MonoBehaviour
 {
-    public enum NodeState { SUCCESS, RUNNING, FAILURE }
-    public NodeState state;
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
 
-    public NodeState State { get { return state; } }
-
-    public abstract NodeState Evaluate();
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
 }
