@@ -44,10 +44,13 @@ public class DoorController : MonoBehaviour
 
         foreach(GameObject character in characters)
         {
-            if(Vector3.Distance(character.transform.position, this.transform.position) < triggerDistance)
+            if(character != null)
             {
-                characterNearby = true;
-                break;
+                if (Vector3.Distance(character.transform.position, this.transform.position) < triggerDistance)
+                {
+                    characterNearby = true;
+                    break;
+                }
             }
         }
 
