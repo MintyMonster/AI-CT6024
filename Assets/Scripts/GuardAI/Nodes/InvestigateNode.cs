@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+// This broke everything?????
+// pls fix because it's cool.
 public class InvestigateNode : Node
 {
     private NavMeshAgent agent;
@@ -21,6 +23,8 @@ public class InvestigateNode : Node
         this.player = player;
     }
 
+    // Similar to other functions, this broke the entirety of the Behaviour tree
+    // This basically checked to see if the torch was on, and it hit the AI's viewcone, the AI would investigate where the light was coming from.
     public override NodeState Evaluate()
     {
         if (viewCone.TorchVisible(out torchPosition))
@@ -41,6 +45,7 @@ public class InvestigateNode : Node
         return NodeState.FAILURE;
     }
 
+    // Investigation start
     private void StartInvestigation()
     {
         isInvestigating = true;

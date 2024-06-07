@@ -10,7 +10,7 @@ public class ChaseNode : Node
     private float chaseRadius;
     private GuardViewCone viewCone;
     private Vector3 lastKnownPosition;
-    private float maxLostDuration = 5f; // Time before giving up on the chase and resuming patrolling
+    private float maxLostDuration = 5f;
 
     public ChaseNode(NavMeshAgent agent, Transform playerTransform, float chaseRadius, GuardViewCone viewCone)
     {
@@ -18,7 +18,7 @@ public class ChaseNode : Node
         this.playerTransform = playerTransform;
         this.chaseRadius = chaseRadius;
         this.viewCone = viewCone;
-        this.lastKnownPosition = agent.transform.position; // Set initial last known position to current agent position
+        this.lastKnownPosition = agent.transform.position; // Set last known position
     }
 
     public override NodeState Evaluate()
@@ -48,7 +48,7 @@ public class ChaseNode : Node
         {
             Debug.Log("Lost sight of player, resuming patrol");
             agent.speed = 7f;
-            ResumePatrol();
+            ResumePatrol(); // Does nothing YET
             return NodeState.FAILURE;
         }
         else
@@ -60,8 +60,6 @@ public class ChaseNode : Node
         }
     }
 
-
-    // Method to resume patrolling
     private void ResumePatrol()
     {
         Debug.Log("Resuming patrol");
@@ -70,8 +68,7 @@ public class ChaseNode : Node
     // Method to check if the node is running
     public bool IsRunning()
     {
-        // The node is running if the player is within the chase radius and visible,
-        // or if the player was seen recently and the chase has not timed out
+        // check if player is within chase radius, and the AI can see it. OR if the player was seen recently and thius hasn't timed out
         return Vector3.Distance(agent.transform.position, playerTransform.position) <= chaseRadius
             && viewCone.CanSeePlayer()
             || Time.time - viewCone.LastSeenTime <= maxLostDuration;

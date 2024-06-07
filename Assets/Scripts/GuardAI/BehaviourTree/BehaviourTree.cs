@@ -4,18 +4,14 @@ using UnityEngine.AI;
 
 // Needed additions:
 
-/*
- * AI to Player shooting and visa versa
- * AI and player health
- * animations
- * sounds(?????)
- * Fleeing at low health
- * Reinforcements
- * Alert (guard death?)
- */
+// Bug notes
+
+// Adding anymore nodes to the behaviour tree breaks the chasenode??? very confused
 
 public class BehaviorTree : MonoBehaviour
 {
+
+    // Variables
     private Node topNode;
     private NavMeshAgent agent;
     public Transform playerTransform;
@@ -26,6 +22,7 @@ public class BehaviorTree : MonoBehaviour
     public float viewAngle = 90f;
     public LayerMask playerMask;
     public float speed = 1f;
+    public Canvas deathScreen;
 
     private PatrolNode patrolNode;
     private HostileNode hostileNode;
@@ -34,6 +31,8 @@ public class BehaviorTree : MonoBehaviour
     private InvestigateNode investigationNode;
     private AlertNode alertNode;
     private KillPlayerNode killPlayerNode;
+
+    private int killDistance = 1;
 
     public bool isDead = false;
 
@@ -58,7 +57,7 @@ public class BehaviorTree : MonoBehaviour
         // Build behavior tree
         topNode = new SelectorNode(new List<Node>
         {
-            new SequenceNode(new List<Node> { hostileNode, chaseNode, killPlayerNode, hearingNode }),
+            new SequenceNode(new List<Node> { hostileNode, chaseNode, hearingNode }),
             patrolNode
         });
     }
@@ -69,6 +68,7 @@ public class BehaviorTree : MonoBehaviour
         if (!isDead)
         {
             topNode.Evaluate();
+            KillPlayer();
         }
 
         /*
@@ -85,5 +85,18 @@ public class BehaviorTree : MonoBehaviour
             anim.SetInteger("Transition", 2);
         }
             */
+    }
+
+    // Kill the player if in distance
+    private void KillPlayer()
+    {
+        if(Vector3.Distance(playerTransform.position, this.transform.position) < killDistance)
+        {
+            if (viewCone.CanSeePlayer())
+            {
+                deathScreen.gameObject.SetActive(true);
+                Time.timeScale = 0;
+            }
+        }
     }
 }

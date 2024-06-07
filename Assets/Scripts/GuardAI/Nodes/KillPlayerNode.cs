@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// broken node
+// Makes chasenode walk slowly?
 public class KillPlayerNode : Node
 {
     private Transform guard;
@@ -14,6 +16,7 @@ public class KillPlayerNode : Node
         this.player = player;
     }
 
+    // When the AI reached within a distance of the player, kill the player.
     public override NodeState Evaluate()
     {
         float distance = Vector3.Distance(guard.position, player.position);

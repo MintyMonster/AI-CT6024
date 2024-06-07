@@ -18,9 +18,10 @@ public class HearingNode : Node
         this.agent = agent;
         this.player = player;
         this.viewCone = viewCone;
-        CharacterControl.OnPlayerNoise += HandlePlayerNoise;
+        CharacterControl.OnPlayerNoise += HandlePlayerNoise; // Newly added hearing event from CharacterControl
     }
 
+    // regular evaluate func
     public override NodeState Evaluate()
     {
         if (heardNoise)
@@ -40,12 +41,14 @@ public class HearingNode : Node
         return NodeState.FAILURE;
     }
 
+    // Event
     private void HandlePlayerNoise(Vector3 position)
     {
         noisePosition = position;
         heardNoise = true;
     }
 
+    // Rotates AI towards player on hearing a noise
     private void TurnTowardsNoise()
     {
         Vector3 direction = (noisePosition - guard.position).normalized;
@@ -53,6 +56,7 @@ public class HearingNode : Node
         guard.rotation = Quaternion.Slerp(guard.rotation, lookRotation, Time.deltaTime * agent.angularSpeed);
     }
 
+    // Checks line of sight to the noise (not behind a wall)
     private bool HasLOSToNoise()
     {
         Vector3 directionToNoise = (noisePosition - guard.position).normalized;

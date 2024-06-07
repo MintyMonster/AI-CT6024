@@ -9,6 +9,7 @@ public class SequenceNode : Node
         this.children = children;
     }
 
+    // The basics behind the evaluate function
     public override NodeState Evaluate()
     {
         bool anyChildRunning = false;

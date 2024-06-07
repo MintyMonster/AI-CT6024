@@ -1,8 +1,10 @@
 using UnityEngine;
 using UnityEngine.AI;
 
+// Slowly losing my mind...
 public class HostileNode : Node
 {
+    // variables
     private Transform guard;
     private Transform player;
     private float sightRange;
@@ -13,6 +15,7 @@ public class HostileNode : Node
     private float rotationSpeed;
     private HearingNode hearingNode;
 
+    // constructor
     public HostileNode(Transform guard, Transform player, float sightRange, float viewAngle, LayerMask layerMask, GuardViewCone viewCone, ChaseNode chaseNode, float rotationSpeed)
     {
         this.guard = guard;
@@ -25,13 +28,17 @@ public class HostileNode : Node
         this.rotationSpeed = rotationSpeed;
     }
 
+    // Setting the hearing node seperately because putting it in the constructor broke things?
     public void SetHearingNode(HearingNode hearingNode)
     {
         this.hearingNode = hearingNode;
     }
 
+
+    // Regular evaluate stuff
     public override NodeState Evaluate()
     {
+        // Check if player can be seen
         if (viewCone.CanSeePlayer())
         {
             StopAgent();
@@ -57,6 +64,7 @@ public class HostileNode : Node
         Debug.Log("Shooting at player!");
     }
 
+    // Self explanator via name
     private void RotateTowardsPlayer()
     {
         Vector3 direction = (player.position - guard.position).normalized;

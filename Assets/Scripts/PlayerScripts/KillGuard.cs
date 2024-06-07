@@ -19,21 +19,21 @@ public class KillGuard : MonoBehaviour
 
     private void CheckKill()
     {
+        // input
         if (Input.GetKeyDown(killKey))
         {
-            Debug.Log("E down");
-
+            // array of the guards
             GameObject[] guards = GameObject.FindGameObjectsWithTag("Character");
 
+            // loop
             foreach (GameObject guard in guards)
             {
-                Debug.Log("foreach reached");
+                // check if actually AI and not the player (same tag)
                 if(guard.transform.GetComponent<BehaviorTree>() != null)
                 {
-                    Debug.Log("script check reached");
+                    // distance check
                     if(Vector3.Distance(this.transform.position, guard.transform.position) <= killDistance)
                     {
-                        Debug.Log("Distance check reached");
 
                         if (!IsSeenByGuard(guard))
                         {
@@ -48,7 +48,7 @@ public class KillGuard : MonoBehaviour
 
     private bool IsSeenByGuard(GameObject AI)
     {
-        if (AI.GetComponent<GuardViewCone>().CanSeePlayer())
+        if (AI.GetComponent<GuardViewCone>().CanSeePlayer()) // custom viewcone func
         {
             return true;
         }
@@ -60,7 +60,7 @@ public class KillGuard : MonoBehaviour
     {
         Destroy(AI.gameObject);
 
-        Instantiate(gravePrefab, transform.position, transform.rotation);
+        Instantiate(gravePrefab, transform.position, transform.rotation); // grave
         
 
         Debug.Log("AI is dead");

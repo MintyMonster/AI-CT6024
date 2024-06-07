@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
+// This is just some basic random patrolling with a spgere
 public class PatrolNode : Node
 {
     private NavMeshAgent agent;
@@ -24,9 +25,11 @@ public class PatrolNode : Node
         return NodeState.RUNNING;
     }
 
+    // Sets new destination
     private void HandleRandomRoam()
         => agent.SetDestination(GetRandomPosition());
 
+    // Handles when the navmeshagent reaches it's destination
     private void HandleDestinationReached()
     {
         if (!agent.pathPending)
@@ -35,6 +38,7 @@ public class PatrolNode : Node
                     HandleRandomRoam();
     }
 
+    // Gets a random position in the world
     private Vector3 GetRandomPosition()
     {
         Vector3 randomDirection = Random.insideUnitSphere * patrolRadius;
